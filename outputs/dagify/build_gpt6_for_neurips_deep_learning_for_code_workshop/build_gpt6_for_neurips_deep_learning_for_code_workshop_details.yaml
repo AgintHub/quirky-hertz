@@ -1,4 +1,4 @@
-dag_type: typed
+dag_type: spec
 description: Generated workflow from UI.
 name: build_gpt6_for_neurips_deep_learning_for_code_workshop
 nodes:
@@ -15,16 +15,18 @@ nodes:
     output_structure:
     - description: The unified training corpus as a list of strings
       key: unified_training_corpus
-      type: List[str]
+      type: str
     - description: List of counts for duplicated content
       key: duplicated_content_counts
-      type: List[int]
+      type: int
     - description: Whether consistent tokenization was applied successfully
       key: consistent_tokenization_status
       type: bool
     - description: List of training batches as lists of strings
       key: training_batches
-      type: List[str]
+      type: str
+    prd:
+      bullets: []
     prompt: Combine all individual prepared training datasets into one cohesive training
       corpus. Deduplicate content, ensure consistent tokenization, and segment into
       training batches.
@@ -45,29 +47,33 @@ nodes:
     - description: List of repository metadata (language, size, domain)
       key: repository_metadata
       type: List[str]
+    prd:
+      bullets: []
     prompt: Collect and catalog a large, diverse dataset of open-source code repositories
       across multiple programming languages relevant to deep learning and general
       software development. Provide a list of repositories and metadata (language,
       size, domain).
   collect_programming_books_text:
     agent: false
-    description: Acquire text corpora of programming books and documentation for training.
+    description: Acquire text corpora of programming books and documentation for training
     name: collect_programming_books_text
     nodes_depended_on: []
     nodes_dependent_on: []
     output_structure:
     - description: The texts or extracts from programming books, tutorials, and official
-        documentation.
+        documentation
       key: programming_book_texts
-      type: List[str]
-    - description: The list of programming languages tagged in the texts.
+      type: str
+    - description: The list of programming languages tagged in the texts
       key: programming_languages
-      type: List[str]
-    - description: The list of subjects or topics covered in the texts.
+      type: str
+    - description: The list of subjects or topics covered in the texts
       key: covered_subjects
-      type: List[str]
+      type: str
+    prd:
+      bullets: []
     prompt: Gather full texts or extracts from programming books, tutorials, and official
-      documentation to augment training corpus focused on code understanding and generation.
+      documentation to augment training corpus focused on code understanding and generation
   collect_stackoverflow_and_forum_data:
     agent: false
     description: Download and clean Stack Overflow and relevant Q&A forum posts concerning
@@ -78,19 +84,21 @@ nodes:
     output_structure:
     - description: List of Stack Overflow post titles and texts
       key: stackoverflow_posts
-      type: List[str]
+      type: str
     - description: List of Q&A forum discussion titles and texts
       key: forum_discussions
-      type: List[str]
+      type: str
     - description: List of question texts
       key: questions
-      type: List[str]
+      type: str
     - description: List of answer texts
       key: answers
-      type: List[str]
+      type: str
     - description: List of code snippets
       key: code_snippets
-      type: List[str]
+      type: str
+    prd:
+      bullets: []
     prompt: Collect Stack Overflow posts and related forum discussions tagged with
       coding and deep learning topics. Process them into structured data suitable
       for training, including questions, answers, and code snippets.
@@ -106,13 +114,15 @@ nodes:
     - description: List of environment settings, including installed libraries and
         dependencies.
       key: environment_settings
-      type: str
+      type: List[str]
     - description: Whether the environment is containerized.
       key: containerized_environment
       type: bool
     - description: Status of the training environment, including any errors or warnings.
       key: training_environment_status
       type: str
+    prd:
+      bullets: []
     prompt: Install and configure all software dependencies required for training
       including chosen ML frameworks, distributed training libraries, data loaders,
       and containerization if applicable.
@@ -140,6 +150,8 @@ nodes:
         code
       key: expected_capabilities
       type: str
+    prd:
+      bullets: []
     prompt: Define detailed specifications for the GPT-6 model including number of
       parameters, tokenization strategy adapted to code, model architecture innovations,
       and expected capabilities for deep learning with code. Focus only on architectural
@@ -152,6 +164,22 @@ nodes:
     nodes_depended_on:
     - train_gpt6_model
     nodes_dependent_on: []
+    output_structure:
+    - description: The accuracy of code generation by the GPT-6 model.
+      key: code_generation_accuracy
+      type: int
+    - description: The percentage of correct syntax in the generated code by the GPT-6
+        model.
+      key: syntax_correctness
+      type: int
+    - description: The accuracy of code completion by the GPT-6 model.
+      key: code_completion
+      type: int
+    - description: The understanding of programming languages by the GPT-6 model.
+      key: programming_language_understanding
+      type: int
+    prd:
+      bullets: []
     prompt: Evaluate the trained GPT-6 model on relevant benchmarks including code
       generation accuracy, syntax correctness, code completion, and programming language
       understanding. Report quantitative metrics and qualitative examples.
@@ -169,10 +197,12 @@ nodes:
       type: str
     - description: Tokenized code data
       key: tokenized_code
-      type: List[str]
+      type: str
     - description: Prepared training samples from the code repositories
       key: training_samples
-      type: List[str]
+      type: str
+    prd:
+      bullets: []
     prompt: Clean raw code repositories by removing non-code files, tokenize code
       appropriately (e.g., subword tokenization with code-aware adjustments), and
       convert into training samples.
@@ -190,14 +220,16 @@ nodes:
       type: str
     - description: List of tokenized book data after cleaning and standardizing formatting
       key: tokenized_book_data
-      type: List[str]
+      type: str
     - description: List of structured book samples suitable for training, including
         questions, answers, and code snippets
       key: structured_book_samples
-      type: List[str]
+      type: str
     - description: List of counts of noisy content removed during cleaning
       key: counts_of_noisy_content
-      type: List[int]
+      type: int
+    prd:
+      bullets: []
     prompt: Preprocess programming book texts by cleaning, standardizing formatting,
       tokenizing with code-aware tokenizer, and structuring data for training.
   prepare_training_corpus_stackoverflow_data:
@@ -211,16 +243,18 @@ nodes:
     output_structure:
     - description: List of cleaned Stack Overflow posts
       key: cleaned_posts
-      type: List[str]
+      type: str
     - description: List of tokenized content from Stack Overflow posts
       key: tokenized_content
-      type: List[str]
+      type: str
     - description: List of formatted paired questions and answers including code snippets
       key: formatted_pairs
-      type: List[str]
+      type: str
     - description: Whether the cleaning and formatting process is valid
       key: validation_status
       type: bool
+    prd:
+      bullets: []
     prompt: Clean collected Stack Overflow posts by removing noise, tokenize content
       with the designated tokenizer, and format paired questions and answers including
       code snippets as training examples.
@@ -247,6 +281,41 @@ nodes:
         scripts.
       key: presentation_materials
       type: str
+    prd:
+      bullets:
+      - complexity: MEDIUM
+        impact: MEDIUM
+        method: Use a combination of regular expressions and custom parsing functions
+          to extract the desired information from the output data.
+        reason: This is necessary to create accurate and comprehensive presentation
+          materials.
+        text: Parse the output of the evaluate_model_performance node to extract relevant
+          metrics and results.
+      - complexity: HIGH
+        impact: HIGH
+        method: Use a presentation software such as PowerPoint or Google Slides to
+          create the slides, and incorporate images, charts, and other visual aids
+          to make the presentation more engaging.
+        reason: This is necessary to provide a clear and concise overview of the GPT-6
+          model's capabilities and limitations.
+        text: Create a series of slides that cover GPT-6 architecture, training pipeline,
+          datasets used, benchmark results, and implications for code AI.
+      - complexity: MEDIUM
+        impact: HIGH
+        method: Use a programming language such as Python to create the demo scripts,
+          and utilize libraries such as PyTorch or TensorFlow to interact with the
+          GPT-6 model.
+        reason: This is necessary to provide a hands-on experience for the workshop
+          attendees and showcase the model's capabilities.
+        text: Develop live demo scripts that demonstrate the capabilities of the GPT-6
+          model.
+      - complexity: LOW
+        impact: MEDIUM
+        method: Use a presentation software such as PowerPoint or Google Slides to
+          combine the slides and demo scripts, and make sure to include a table of
+          contents and page numbers.
+        reason: This is necessary to provide a cohesive and easy-to-follow presentation.
+        text: Combine the slides and demo scripts into a single presentation document.
     prompt: Develop clear presentation materials including slides and live demo scripts
       for the NeurIPS Deep Learning for Code workshop, covering GPT-6 architecture,
       training pipeline, datasets used, benchmark results, and implications for code
@@ -275,6 +344,8 @@ nodes:
     - description: Description of the reasoning behind the selected hardware infrastructure
       key: reasoning_description
       type: str
+    prd:
+      bullets: []
     prompt: Based on model specifications, select appropriate hardware infrastructure
       including GPU/TPU types, number of nodes, memory, and storage required. Describe
       the reasoning concisely.
@@ -288,22 +359,23 @@ nodes:
     - select_hardware_infrastructure
     nodes_dependent_on: []
     output_structure:
-    - description: Selected machine learning framework (e.g., PyTorch, TensorFlow)
+    - description: Selected machine learning framework
       key: selected_framework
       type: str
-    - description: Selected distributed training toolkit (e.g., DeepSpeed, Megatron)
+    - description: Selected distributed training toolkit
       key: selected_toolkit
       type: str
-    - description: List of selected hardware resources (e.g., GPUs, TPUs)
+    - description: List of selected hardware resources
       key: hardware_resources
       type: str
     - description: Detailed training plan with epoch count, batch size, and learning
         rate
       key: training_plan
       type: str
-    prompt: Select ML frameworks (e.g., PyTorch, TensorFlow) and distributed training
-      solutions (e.g., DeepSpeed, Megatron) for efficient training of a large GPT-6
-      model specialized on code data.
+    prd:
+      bullets: []
+    prompt: Select ML frameworks and distributed training solutions for efficient
+      training of a large GPT-6 model specialized on code data.
   train_gpt6_model:
     agent: false
     description: Run the model training process using defined specifications and prepared
@@ -324,6 +396,8 @@ nodes:
     - description: Total time taken to train the GPT-6 model.
       key: training_time
       type: int
+    prd:
+      bullets: []
     prompt: Execute the training loop for the GPT-6 model on the assembled training
       data using the configured environment. Focus on progressive training, checkpointing,
       and monitoring metrics for code understanding and generation.
