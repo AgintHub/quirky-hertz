@@ -1,0 +1,173 @@
+dag_type: plain_text
+description: A granular workflow to design, develop, train, evaluate, and prepare
+  GPT-6 model specialized for the NeurIPS Deep Learning for Code workshop.
+name: build_gpt6_for_neurips_deep_learning_for_code_workshop
+nodes:
+  assemble_full_training_corpus:
+    agent: false
+    description: Integrate all prepared training data into a unified, deduplicated
+      training corpus.
+    name: assemble_full_training_corpus
+    nodes_depended_on:
+    - prepare_training_corpus_code_repos
+    - prepare_training_corpus_programming_books
+    - prepare_training_corpus_stackoverflow_data
+    nodes_dependent_on:
+    - select_training_framework
+    prompt: Combine all individual prepared training datasets into one cohesive training
+      corpus. Deduplicate content, ensure consistent tokenization, and segment into
+      training batches.
+  collect_open_source_code_repositories:
+    agent: false
+    description: Gather a diverse set of open-source code repositories for training.
+    name: collect_open_source_code_repositories
+    nodes_depended_on: []
+    nodes_dependent_on:
+    - prepare_training_corpus_code_repos
+    prompt: Collect and catalog a large, diverse dataset of open-source code repositories
+      across multiple programming languages relevant to deep learning and general
+      software development. Provide a list of repositories and metadata (language,
+      size, domain).
+  collect_programming_books_text:
+    agent: false
+    description: Acquire text corpora of programming books and documentation for training.
+    name: collect_programming_books_text
+    nodes_depended_on: []
+    nodes_dependent_on:
+    - prepare_training_corpus_programming_books
+    prompt: Gather full texts or extracts from programming books, tutorials, and official
+      documentation to augment training corpus focused on code understanding and generation.
+  collect_stackoverflow_and_forum_data:
+    agent: false
+    description: Download and clean Stack Overflow and relevant Q&A forum posts concerning
+      coding and deep learning.
+    name: collect_stackoverflow_and_forum_data
+    nodes_depended_on: []
+    nodes_dependent_on:
+    - prepare_training_corpus_stackoverflow_data
+    prompt: Collect Stack Overflow posts and related forum discussions tagged with
+      coding and deep learning topics. Process them into structured data suitable
+      for training, including questions, answers, and code snippets.
+  configure_training_environment:
+    agent: false
+    description: Set up software environment with dependencies, libraries, and containerization
+      tools for training.
+    name: configure_training_environment
+    nodes_depended_on:
+    - select_training_framework
+    nodes_dependent_on:
+    - train_gpt6_model
+    prompt: Install and configure all software dependencies required for training
+      including chosen ML frameworks, distributed training libraries, data loaders,
+      and containerization if applicable.
+  define_model_specifications:
+    agent: false
+    description: Specify GPT-6 architecture, size, modality, and design goals tailored
+      for code tasks.
+    name: define_model_specifications
+    nodes_depended_on: []
+    nodes_dependent_on:
+    - prepare_training_corpus_code_repos
+    - prepare_training_corpus_programming_books
+    - prepare_training_corpus_stackoverflow_data
+    - select_hardware_infrastructure
+    prompt: Define detailed specifications for the GPT-6 model including number of
+      parameters, tokenization strategy adapted to code, model architecture innovations,
+      and expected capabilities for deep learning with code. Focus only on architectural
+      design and goals.
+  evaluate_model_performance:
+    agent: false
+    description: Assess trained model on code generation, code understanding, and
+      language modeling benchmarks.
+    name: evaluate_model_performance
+    nodes_depended_on:
+    - train_gpt6_model
+    nodes_dependent_on:
+    - prepare_workshop_presentation_materials
+    prompt: Evaluate the trained GPT-6 model on relevant benchmarks including code
+      generation accuracy, syntax correctness, code completion, and programming language
+      understanding. Report quantitative metrics and qualitative examples.
+  prepare_training_corpus_code_repos:
+    agent: false
+    description: Clean, tokenize, and format open-source code repositories for model
+      ingestion.
+    name: prepare_training_corpus_code_repos
+    nodes_depended_on:
+    - collect_open_source_code_repositories
+    nodes_dependent_on:
+    - assemble_full_training_corpus
+    prompt: Clean raw code repositories by removing non-code files, tokenize code
+      appropriately (e.g., subword tokenization with code-aware adjustments), and
+      convert into training samples.
+  prepare_training_corpus_programming_books:
+    agent: false
+    description: Clean, tokenize, and format programming books and documentation into
+      training data.
+    name: prepare_training_corpus_programming_books
+    nodes_depended_on:
+    - collect_programming_books_text
+    nodes_dependent_on:
+    - assemble_full_training_corpus
+    prompt: Preprocess programming book texts by cleaning, standardizing formatting,
+      tokenizing with code-aware tokenizer, and structuring data for training.
+  prepare_training_corpus_stackoverflow_data:
+    agent: false
+    description: Clean, tokenize, and convert Stack Overflow and forum data into training
+      samples.
+    name: prepare_training_corpus_stackoverflow_data
+    nodes_depended_on:
+    - collect_stackoverflow_and_forum_data
+    nodes_dependent_on:
+    - assemble_full_training_corpus
+    prompt: Clean collected Stack Overflow posts by removing noise, tokenize content
+      with the designated tokenizer, and format paired questions and answers including
+      code snippets as training examples.
+  prepare_workshop_presentation_materials:
+    agent: false
+    description: Create slides, demos, and documentation explaining GPT-6 design,
+      training, and benchmark results for the workshop.
+    name: prepare_workshop_presentation_materials
+    nodes_depended_on:
+    - evaluate_model_performance
+    nodes_dependent_on: []
+    prompt: Develop clear presentation materials including slides and live demo scripts
+      for the NeurIPS Deep Learning for Code workshop, covering GPT-6 architecture,
+      training pipeline, datasets used, benchmark results, and implications for code
+      AI.
+  select_hardware_infrastructure:
+    agent: false
+    description: Decide on computing resources for model training including GPUs/TPUs
+      and storage.
+    name: select_hardware_infrastructure
+    nodes_depended_on:
+    - define_model_specifications
+    nodes_dependent_on:
+    - select_training_framework
+    prompt: Based on model specifications, select appropriate hardware infrastructure
+      including GPU/TPU types, number of nodes, memory, and storage required. Describe
+      the reasoning concisely.
+  select_training_framework:
+    agent: false
+    description: Choose machine learning frameworks and distributed training tools
+      for GPT-6 training.
+    name: select_training_framework
+    nodes_depended_on:
+    - assemble_full_training_corpus
+    - select_hardware_infrastructure
+    nodes_dependent_on:
+    - configure_training_environment
+    prompt: Select ML frameworks (e.g., PyTorch, TensorFlow) and distributed training
+      solutions (e.g., DeepSpeed, Megatron) for efficient training of a large GPT-6
+      model specialized on code data.
+  train_gpt6_model:
+    agent: false
+    description: Run the model training process using defined specifications and prepared
+      corpus.
+    name: train_gpt6_model
+    nodes_depended_on:
+    - configure_training_environment
+    nodes_dependent_on:
+    - evaluate_model_performance
+    prompt: Execute the training loop for the GPT-6 model on the assembled training
+      data using the configured environment. Focus on progressive training, checkpointing,
+      and monitoring metrics for code understanding and generation.
