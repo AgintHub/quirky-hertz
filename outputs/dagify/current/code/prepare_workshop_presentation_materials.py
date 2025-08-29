@@ -1,3 +1,17 @@
+from ._prepare_workshop_presentation_materials.parse_evaluation_metrics import parse_evaluation_metrics
+from ._prepare_workshop_presentation_materials.create_architecture_slides import create_architecture_slides
+from ._prepare_workshop_presentation_materials.create_training_pipeline_slides import create_training_pipeline_slides
+from ._prepare_workshop_presentation_materials.extract_dataset_information import extract_dataset_information
+from ._prepare_workshop_presentation_materials.create_benchmark_slides import create_benchmark_slides
+from ._prepare_workshop_presentation_materials.create_implications_slides import create_implications_slides
+from ._prepare_workshop_presentation_materials.create_demo_scripts import create_demo_scripts
+from ._prepare_workshop_presentation_materials.combine_presentation_materials import combine_presentation_materials
+from ._prepare_workshop_presentation_materials.generate_slide_title import generate_slide_title
+from ._prepare_workshop_presentation_materials.format_benchmark_summary import format_benchmark_summary
+
+from pydantic import BaseModel, Field
+
+
 # -- PRD --
 # 1. BULLET: Parse the output of the evaluate_model_performance node to extract relevant
 #   metrics and results.
@@ -40,7 +54,6 @@
 #           of contents and page numbers.
 # -- END PRD --
 
-from pydantic import BaseModel, Field
 
 
 class EvaluateModelPerformanceOutput(BaseModel):
@@ -69,12 +82,50 @@ def prepare_workshop_presentation_materials(evaluate_model_performance_input: Ev
     Returns:
         PrepareWorkshopPresentationMaterialsOutput: Object containing outputs for this node.
     """
-    # TODO: Implement this function
-
-    # Return stub output with placeholder values
+    # Parse and extract metrics from evaluation results
+    parsed_metrics: dict = parse_evaluation_metrics(
+        code_gen_accuracy=evaluate_model_performance_input.code_generation_accuracy,
+        syntax_correctness=evaluate_model_performance_input.syntax_correctness,
+        code_completion=evaluate_model_performance_input.code_completion,
+        lang_understanding=evaluate_model_performance_input.programming_language_understanding
+    )
+    
+    # Create architecture slides covering GPT-6 design
+    architecture_slides: str = create_architecture_slides(model_name="GPT-6")
+    
+    # Generate training pipeline documentation
+    training_slides: str = create_training_pipeline_slides()
+    
+    # Extract dataset information for presentation
+    dataset_info: str = extract_dataset_information()
+    
+    # Create benchmark results visualization
+    benchmark_slides: str = create_benchmark_slides(metrics=parsed_metrics)
+    
+    # Generate implications analysis for code AI
+    implications_slides: str = create_implications_slides(metrics=parsed_metrics)
+    
+    # Develop live demo scripts
+    demo_scripts: str = create_demo_scripts(model="GPT-6")
+    
+    # Combine all materials into final presentation
+    final_presentation: str = combine_presentation_materials(
+        architecture=architecture_slides,
+        training=training_slides,
+        benchmarks=benchmark_slides,
+        implications=implications_slides,
+        demos=demo_scripts
+    )
+    
+    # Generate slide title
+    slide_title: str = generate_slide_title(topic="GPT-6 Architecture")
+    
+    # Format benchmark summary
+    benchmark_summary: str = format_benchmark_summary(metrics=parsed_metrics)
+    
     return PrepareWorkshopPresentationMaterialsOutput(
-        workshop_slide_title="",
-        dataset_used="",
-        benchmark_results="",
-        presentation_materials="",
+        workshop_slide_title=slide_title,
+        dataset_used=dataset_info,
+        benchmark_results=benchmark_summary,
+        presentation_materials=final_presentation
     )

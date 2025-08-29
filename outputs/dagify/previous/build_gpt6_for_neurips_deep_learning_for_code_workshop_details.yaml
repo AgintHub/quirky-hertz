@@ -1,11 +1,56 @@
-dag_type: spec
+dag_type: stub
 description: Generated workflow from UI.
 name: build_gpt6_for_neurips_deep_learning_for_code_workshop
 nodes:
   assemble_full_training_corpus:
     agent: false
+    code_node_type: stub
     description: Integrate all prepared training data into a unified, deduplicated
       training corpus.
+    implementation: "from pydantic import BaseModel, Field\n\n\nclass PrepareTrainingCorpusCodeReposOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for prepare_training_corpus_code_repos node outputs.\"\
+      \"\"\n    cleaned_repository_data: str = Field(..., description=\"Cleaned and\
+      \ formatted code repository data\")\n    tokenized_code: str = Field(..., description=\"\
+      Tokenized code data\")\n    training_samples: str = Field(..., description=\"\
+      Prepared training samples from the code repositories\")\n\n\nclass PrepareTrainingCorpusProgrammingBooksOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for prepare_training_corpus_programming_books node\
+      \ outputs.\"\"\"\n    cleaned_book_content: str = Field(..., description=\"\
+      Preprocessed text content of programming books and documentation\")\n    tokenized_book_data:\
+      \ str = Field(..., description=\"List of tokenized book data after cleaning\
+      \ and standardizing formatting\")\n    structured_book_samples: str = Field(...,\
+      \ description=\"List of structured book samples suitable for training, including\
+      \ questions, answers, and code snippets\")\n    counts_of_noisy_content: int\
+      \ = Field(..., description=\"List of counts of noisy content removed during\
+      \ cleaning\")\n\n\nclass PrepareTrainingCorpusStackoverflowDataOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for prepare_training_corpus_stackoverflow_data node\
+      \ outputs.\"\"\"\n    cleaned_posts: str = Field(..., description=\"List of\
+      \ cleaned Stack Overflow posts\")\n    tokenized_content: str = Field(..., description=\"\
+      List of tokenized content from Stack Overflow posts\")\n    formatted_pairs:\
+      \ str = Field(..., description=\"List of formatted paired questions and answers\
+      \ including code snippets\")\n    validation_status: bool = Field(..., description=\"\
+      Whether the cleaning and formatting process is valid\")\n\n\nclass AssembleFullTrainingCorpusOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for assemble_full_training_corpus node outputs.\"\"\
+      \"\n    unified_training_corpus: str = Field(..., description=\"The unified\
+      \ training corpus as a list of strings\")\n    duplicated_content_counts: int\
+      \ = Field(..., description=\"List of counts for duplicated content\")\n    consistent_tokenization_status:\
+      \ bool = Field(..., description=\"Whether consistent tokenization was applied\
+      \ successfully\")\n    training_batches: str = Field(..., description=\"List\
+      \ of training batches as lists of strings\")\n\n\ndef assemble_full_training_corpus(prepare_training_corpus_code_repos_input:\
+      \ PrepareTrainingCorpusCodeReposOutput, prepare_training_corpus_programming_books_input:\
+      \ PrepareTrainingCorpusProgrammingBooksOutput, prepare_training_corpus_stackoverflow_data_input:\
+      \ PrepareTrainingCorpusStackoverflowDataOutput, **kwargs) -> AssembleFullTrainingCorpusOutput:\n\
+      \    \"\"\"Integrate all prepared training data into a unified, deduplicated\
+      \ training corpus.\n\n    Args:\n        prepare_training_corpus_code_repos_input:\
+      \ Input from the 'prepare_training_corpus_code_repos' node.\n        prepare_training_corpus_programming_books_input:\
+      \ Input from the 'prepare_training_corpus_programming_books' node.\n       \
+      \ prepare_training_corpus_stackoverflow_data_input: Input from the 'prepare_training_corpus_stackoverflow_data'\
+      \ node.\n        **kwargs: Additional keyword arguments.\n\n    Returns:\n \
+      \       AssembleFullTrainingCorpusOutput: Object containing outputs for this\
+      \ node.\n    \"\"\"\n    # TODO: Implement this function\n\n    # Return stub\
+      \ output with placeholder values\n    return AssembleFullTrainingCorpusOutput(\n\
+      \        unified_training_corpus=\"\",\n        duplicated_content_counts=0,\n\
+      \        consistent_tokenization_status=False,\n        training_batches=\"\"\
+      ,\n    )"
     name: assemble_full_training_corpus
     nodes_depended_on:
     - prepare_training_corpus_code_repos
@@ -30,9 +75,27 @@ nodes:
     prompt: Combine all individual prepared training datasets into one cohesive training
       corpus. Deduplicate content, ensure consistent tokenization, and segment into
       training batches.
+    shims: []
   collect_open_source_code_repositories:
     agent: false
+    code_node_type: stub
     description: Gather a diverse set of open-source code repositories for training.
+    implementation: "from pydantic import BaseModel, Field\nfrom typing import List\n\
+      \n\nclass CollectOpenSourceCodeRepositoriesOutput(BaseModel):\n    \"\"\"Pydantic\
+      \ model for collect_open_source_code_repositories node outputs.\"\"\"\n    repository_list:\
+      \ List[str] = Field(..., description=\"List of open-source code repository URLs\"\
+      )\n    language_distribution: List[str] = Field(..., description=\"List of programming\
+      \ languages with their respective repository counts\")\n    repository_metadata:\
+      \ List[str] = Field(..., description=\"List of repository metadata (language,\
+      \ size, domain)\")\n\n\ndef collect_open_source_code_repositories(general_input:\
+      \ str, **kwargs) -> CollectOpenSourceCodeRepositoriesOutput:\n    \"\"\"Gather\
+      \ a diverse set of open-source code repositories for training.\n\n    Args:\n\
+      \        general_input: General input string for the root node.\n        **kwargs:\
+      \ Additional keyword arguments.\n\n    Returns:\n        CollectOpenSourceCodeRepositoriesOutput:\
+      \ Object containing outputs for this node.\n    \"\"\"\n    # TODO: Implement\
+      \ this function\n\n    # Return stub output with placeholder values\n    return\
+      \ CollectOpenSourceCodeRepositoriesOutput(\n        repository_list=[],\n  \
+      \      language_distribution=[],\n        repository_metadata=[],\n    )"
     name: collect_open_source_code_repositories
     nodes_depended_on: []
     nodes_dependent_on: []
@@ -53,9 +116,26 @@ nodes:
       across multiple programming languages relevant to deep learning and general
       software development. Provide a list of repositories and metadata (language,
       size, domain).
+    shims: []
   collect_programming_books_text:
     agent: false
+    code_node_type: stub
     description: Acquire text corpora of programming books and documentation for training
+    implementation: "from pydantic import BaseModel, Field\n\n\nclass CollectProgrammingBooksTextOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for collect_programming_books_text node outputs.\"\
+      \"\"\n    programming_book_texts: str = Field(..., description=\"The texts or\
+      \ extracts from programming books, tutorials, and official documentation\")\n\
+      \    programming_languages: str = Field(..., description=\"The list of programming\
+      \ languages tagged in the texts\")\n    covered_subjects: str = Field(..., description=\"\
+      The list of subjects or topics covered in the texts\")\n\n\ndef collect_programming_books_text(general_input:\
+      \ str, **kwargs) -> CollectProgrammingBooksTextOutput:\n    \"\"\"Acquire text\
+      \ corpora of programming books and documentation for training\n\n    Args:\n\
+      \        general_input: General input string for the root node.\n        **kwargs:\
+      \ Additional keyword arguments.\n\n    Returns:\n        CollectProgrammingBooksTextOutput:\
+      \ Object containing outputs for this node.\n    \"\"\"\n    # TODO: Implement\
+      \ this function\n\n    # Return stub output with placeholder values\n    return\
+      \ CollectProgrammingBooksTextOutput(\n        programming_book_texts=\"\",\n\
+      \        programming_languages=\"\",\n        covered_subjects=\"\",\n    )"
     name: collect_programming_books_text
     nodes_depended_on: []
     nodes_dependent_on: []
@@ -74,10 +154,30 @@ nodes:
       bullets: []
     prompt: Gather full texts or extracts from programming books, tutorials, and official
       documentation to augment training corpus focused on code understanding and generation
+    shims: []
   collect_stackoverflow_and_forum_data:
     agent: false
+    code_node_type: stub
     description: Download and clean Stack Overflow and relevant Q&A forum posts concerning
       coding and deep learning.
+    implementation: "from pydantic import BaseModel, Field\n\n\nclass CollectStackoverflowAndForumDataOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for collect_stackoverflow_and_forum_data node outputs.\"\
+      \"\"\n    stackoverflow_posts: str = Field(..., description=\"List of Stack\
+      \ Overflow post titles and texts\")\n    forum_discussions: str = Field(...,\
+      \ description=\"List of Q&A forum discussion titles and texts\")\n    questions:\
+      \ str = Field(..., description=\"List of question texts\")\n    answers: str\
+      \ = Field(..., description=\"List of answer texts\")\n    code_snippets: str\
+      \ = Field(..., description=\"List of code snippets\")\n\n\ndef collect_stackoverflow_and_forum_data(general_input:\
+      \ str, **kwargs) -> CollectStackoverflowAndForumDataOutput:\n    \"\"\"Download\
+      \ and clean Stack Overflow and relevant Q&A forum posts concerning coding and\
+      \ deep learning.\n\n    Args:\n        general_input: General input string for\
+      \ the root node.\n        **kwargs: Additional keyword arguments.\n\n    Returns:\n\
+      \        CollectStackoverflowAndForumDataOutput: Object containing outputs for\
+      \ this node.\n    \"\"\"\n    # TODO: Implement this function\n\n    # Return\
+      \ stub output with placeholder values\n    return CollectStackoverflowAndForumDataOutput(\n\
+      \        stackoverflow_posts=\"\",\n        forum_discussions=\"\",\n      \
+      \  questions=\"\",\n        answers=\"\",\n        code_snippets=\"\",\n   \
+      \ )"
     name: collect_stackoverflow_and_forum_data
     nodes_depended_on: []
     nodes_dependent_on: []
@@ -102,10 +202,37 @@ nodes:
     prompt: Collect Stack Overflow posts and related forum discussions tagged with
       coding and deep learning topics. Process them into structured data suitable
       for training, including questions, answers, and code snippets.
+    shims: []
   configure_training_environment:
     agent: false
+    code_node_type: stub
     description: Set up software environment with dependencies, libraries, and containerization
       tools for training.
+    implementation: "from pydantic import BaseModel, Field\nfrom typing import List\n\
+      \n\nclass SelectTrainingFrameworkOutput(BaseModel):\n    \"\"\"Pydantic model\
+      \ for select_training_framework node outputs.\"\"\"\n    selected_framework:\
+      \ str = Field(..., description=\"Selected machine learning framework\")\n  \
+      \  selected_toolkit: str = Field(..., description=\"Selected distributed training\
+      \ toolkit\")\n    hardware_resources: str = Field(..., description=\"List of\
+      \ selected hardware resources\")\n    training_plan: str = Field(..., description=\"\
+      Detailed training plan with epoch count, batch size, and learning rate\")\n\n\
+      \nclass ConfigureTrainingEnvironmentOutput(BaseModel):\n    \"\"\"Pydantic model\
+      \ for configure_training_environment node outputs.\"\"\"\n    environment_settings:\
+      \ List[str] = Field(..., description=\"List of environment settings, including\
+      \ installed libraries and dependencies.\")\n    containerized_environment: bool\
+      \ = Field(..., description=\"Whether the environment is containerized.\")\n\
+      \    training_environment_status: str = Field(..., description=\"Status of the\
+      \ training environment, including any errors or warnings.\")\n\n\ndef configure_training_environment(select_training_framework_input:\
+      \ SelectTrainingFrameworkOutput, **kwargs) -> ConfigureTrainingEnvironmentOutput:\n\
+      \    \"\"\"Set up software environment with dependencies, libraries, and containerization\
+      \ tools for training.\n\n    Args:\n        select_training_framework_input:\
+      \ Input from the 'select_training_framework' node.\n        **kwargs: Additional\
+      \ keyword arguments.\n\n    Returns:\n        ConfigureTrainingEnvironmentOutput:\
+      \ Object containing outputs for this node.\n    \"\"\"\n    # TODO: Implement\
+      \ this function\n\n    # Return stub output with placeholder values\n    return\
+      \ ConfigureTrainingEnvironmentOutput(\n        environment_settings=[],\n  \
+      \      containerized_environment=False,\n        training_environment_status=\"\
+      \",\n    )"
     name: configure_training_environment
     nodes_depended_on:
     - select_training_framework
@@ -126,10 +253,30 @@ nodes:
     prompt: Install and configure all software dependencies required for training
       including chosen ML frameworks, distributed training libraries, data loaders,
       and containerization if applicable.
+    shims: []
   define_model_specifications:
     agent: false
+    code_node_type: stub
     description: Specify GPT-6 architecture, size, modality, and design goals tailored
       for code tasks.
+    implementation: "from pydantic import BaseModel, Field\n\n\nclass DefineModelSpecificationsOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for define_model_specifications node outputs.\"\"\"\
+      \n    model_name: str = Field(..., description=\"Name of the GPT-6 model\")\n\
+      \    model_size: int = Field(..., description=\"Number of parameters in the\
+      \ GPT-6 model\")\n    model_modality: str = Field(..., description=\"Type of\
+      \ input data for the GPT-6 model (e.g., text, code)\")\n    model_architecture:\
+      \ str = Field(..., description=\"Architecture of the GPT-6 model\")\n    expected_capabilities:\
+      \ str = Field(..., description=\"Expected capabilities of the GPT-6 model for\
+      \ deep learning with code\")\n\n\ndef define_model_specifications(general_input:\
+      \ str, **kwargs) -> DefineModelSpecificationsOutput:\n    \"\"\"Specify GPT-6\
+      \ architecture, size, modality, and design goals tailored for code tasks.\n\n\
+      \    Args:\n        general_input: General input string for the root node.\n\
+      \        **kwargs: Additional keyword arguments.\n\n    Returns:\n        DefineModelSpecificationsOutput:\
+      \ Object containing outputs for this node.\n    \"\"\"\n    # TODO: Implement\
+      \ this function\n\n    # Return stub output with placeholder values\n    return\
+      \ DefineModelSpecificationsOutput(\n        model_name=\"\",\n        model_size=0,\n\
+      \        model_modality=\"\",\n        model_architecture=\"\",\n        expected_capabilities=\"\
+      \",\n    )"
     name: define_model_specifications
     nodes_depended_on: []
     nodes_dependent_on: []
@@ -156,10 +303,36 @@ nodes:
       parameters, tokenization strategy adapted to code, model architecture innovations,
       and expected capabilities for deep learning with code. Focus only on architectural
       design and goals.
+    shims: []
   evaluate_model_performance:
     agent: false
+    code_node_type: stub
     description: Assess trained model on code generation, code understanding, and
       language modeling benchmarks.
+    implementation: "from pydantic import BaseModel, Field\n\n\nclass TrainGpt6ModelOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for train_gpt6_model node outputs.\"\"\"\n    training_metrics:\
+      \ str = Field(..., description=\"Training metrics, such as loss and accuracy,\
+      \ during the model training process.\")\n    checkpoint_status: bool = Field(...,\
+      \ description=\"Whether the model training process has reached a reasonable\
+      \ accuracy and is ready to be used.\")\n    training_time: int = Field(...,\
+      \ description=\"Total time taken to train the GPT-6 model.\")\n\n\nclass EvaluateModelPerformanceOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for evaluate_model_performance node outputs.\"\"\"\
+      \n    code_generation_accuracy: int = Field(..., description=\"The accuracy\
+      \ of code generation by the GPT-6 model.\")\n    syntax_correctness: int = Field(...,\
+      \ description=\"The percentage of correct syntax in the generated code by the\
+      \ GPT-6 model.\")\n    code_completion: int = Field(..., description=\"The accuracy\
+      \ of code completion by the GPT-6 model.\")\n    programming_language_understanding:\
+      \ int = Field(..., description=\"The understanding of programming languages\
+      \ by the GPT-6 model.\")\n\n\ndef evaluate_model_performance(train_gpt6_model_input:\
+      \ TrainGpt6ModelOutput, **kwargs) -> EvaluateModelPerformanceOutput:\n    \"\
+      \"\"Assess trained model on code generation, code understanding, and language\
+      \ modeling benchmarks.\n\n    Args:\n        train_gpt6_model_input: Input from\
+      \ the 'train_gpt6_model' node.\n        **kwargs: Additional keyword arguments.\n\
+      \n    Returns:\n        EvaluateModelPerformanceOutput: Object containing outputs\
+      \ for this node.\n    \"\"\"\n    # TODO: Implement this function\n\n    # Return\
+      \ stub output with placeholder values\n    return EvaluateModelPerformanceOutput(\n\
+      \        code_generation_accuracy=0,\n        syntax_correctness=0,\n      \
+      \  code_completion=0,\n        programming_language_understanding=0,\n    )"
     name: evaluate_model_performance
     nodes_depended_on:
     - train_gpt6_model
@@ -183,10 +356,34 @@ nodes:
     prompt: Evaluate the trained GPT-6 model on relevant benchmarks including code
       generation accuracy, syntax correctness, code completion, and programming language
       understanding. Report quantitative metrics and qualitative examples.
+    shims: []
   prepare_training_corpus_code_repos:
     agent: false
+    code_node_type: stub
     description: Clean, tokenize, and format open-source code repositories for model
       ingestion.
+    implementation: "from pydantic import BaseModel, Field\nfrom typing import List\n\
+      \n\nclass CollectOpenSourceCodeRepositoriesOutput(BaseModel):\n    \"\"\"Pydantic\
+      \ model for collect_open_source_code_repositories node outputs.\"\"\"\n    repository_list:\
+      \ List[str] = Field(..., description=\"List of open-source code repository URLs\"\
+      )\n    language_distribution: List[str] = Field(..., description=\"List of programming\
+      \ languages with their respective repository counts\")\n    repository_metadata:\
+      \ List[str] = Field(..., description=\"List of repository metadata (language,\
+      \ size, domain)\")\n\n\nclass PrepareTrainingCorpusCodeReposOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for prepare_training_corpus_code_repos node outputs.\"\
+      \"\"\n    cleaned_repository_data: str = Field(..., description=\"Cleaned and\
+      \ formatted code repository data\")\n    tokenized_code: str = Field(..., description=\"\
+      Tokenized code data\")\n    training_samples: str = Field(..., description=\"\
+      Prepared training samples from the code repositories\")\n\n\ndef prepare_training_corpus_code_repos(collect_open_source_code_repositories_input:\
+      \ CollectOpenSourceCodeRepositoriesOutput, **kwargs) -> PrepareTrainingCorpusCodeReposOutput:\n\
+      \    \"\"\"Clean, tokenize, and format open-source code repositories for model\
+      \ ingestion.\n\n    Args:\n        collect_open_source_code_repositories_input:\
+      \ Input from the 'collect_open_source_code_repositories' node.\n        **kwargs:\
+      \ Additional keyword arguments.\n\n    Returns:\n        PrepareTrainingCorpusCodeReposOutput:\
+      \ Object containing outputs for this node.\n    \"\"\"\n    # TODO: Implement\
+      \ this function\n\n    # Return stub output with placeholder values\n    return\
+      \ PrepareTrainingCorpusCodeReposOutput(\n        cleaned_repository_data=\"\"\
+      ,\n        tokenized_code=\"\",\n        training_samples=\"\",\n    )"
     name: prepare_training_corpus_code_repos
     nodes_depended_on:
     - collect_open_source_code_repositories
@@ -206,10 +403,38 @@ nodes:
     prompt: Clean raw code repositories by removing non-code files, tokenize code
       appropriately (e.g., subword tokenization with code-aware adjustments), and
       convert into training samples.
+    shims: []
   prepare_training_corpus_programming_books:
     agent: false
+    code_node_type: stub
     description: Clean, tokenize, and format programming books and documentation into
       training data.
+    implementation: "from pydantic import BaseModel, Field\n\n\nclass CollectProgrammingBooksTextOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for collect_programming_books_text node outputs.\"\
+      \"\"\n    programming_book_texts: str = Field(..., description=\"The texts or\
+      \ extracts from programming books, tutorials, and official documentation\")\n\
+      \    programming_languages: str = Field(..., description=\"The list of programming\
+      \ languages tagged in the texts\")\n    covered_subjects: str = Field(..., description=\"\
+      The list of subjects or topics covered in the texts\")\n\n\nclass PrepareTrainingCorpusProgrammingBooksOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for prepare_training_corpus_programming_books node\
+      \ outputs.\"\"\"\n    cleaned_book_content: str = Field(..., description=\"\
+      Preprocessed text content of programming books and documentation\")\n    tokenized_book_data:\
+      \ str = Field(..., description=\"List of tokenized book data after cleaning\
+      \ and standardizing formatting\")\n    structured_book_samples: str = Field(...,\
+      \ description=\"List of structured book samples suitable for training, including\
+      \ questions, answers, and code snippets\")\n    counts_of_noisy_content: int\
+      \ = Field(..., description=\"List of counts of noisy content removed during\
+      \ cleaning\")\n\n\ndef prepare_training_corpus_programming_books(collect_programming_books_text_input:\
+      \ CollectProgrammingBooksTextOutput, **kwargs) -> PrepareTrainingCorpusProgrammingBooksOutput:\n\
+      \    \"\"\"Clean, tokenize, and format programming books and documentation into\
+      \ training data.\n\n    Args:\n        collect_programming_books_text_input:\
+      \ Input from the 'collect_programming_books_text' node.\n        **kwargs: Additional\
+      \ keyword arguments.\n\n    Returns:\n        PrepareTrainingCorpusProgrammingBooksOutput:\
+      \ Object containing outputs for this node.\n    \"\"\"\n    # TODO: Implement\
+      \ this function\n\n    # Return stub output with placeholder values\n    return\
+      \ PrepareTrainingCorpusProgrammingBooksOutput(\n        cleaned_book_content=\"\
+      \",\n        tokenized_book_data=\"\",\n        structured_book_samples=\"\"\
+      ,\n        counts_of_noisy_content=0,\n    )"
     name: prepare_training_corpus_programming_books
     nodes_depended_on:
     - collect_programming_books_text
@@ -232,10 +457,37 @@ nodes:
       bullets: []
     prompt: Preprocess programming book texts by cleaning, standardizing formatting,
       tokenizing with code-aware tokenizer, and structuring data for training.
+    shims: []
   prepare_training_corpus_stackoverflow_data:
     agent: false
+    code_node_type: stub
     description: Clean, tokenize, and convert Stack Overflow and forum data into training
       samples.
+    implementation: "from pydantic import BaseModel, Field\n\n\nclass CollectStackoverflowAndForumDataOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for collect_stackoverflow_and_forum_data node outputs.\"\
+      \"\"\n    stackoverflow_posts: str = Field(..., description=\"List of Stack\
+      \ Overflow post titles and texts\")\n    forum_discussions: str = Field(...,\
+      \ description=\"List of Q&A forum discussion titles and texts\")\n    questions:\
+      \ str = Field(..., description=\"List of question texts\")\n    answers: str\
+      \ = Field(..., description=\"List of answer texts\")\n    code_snippets: str\
+      \ = Field(..., description=\"List of code snippets\")\n\n\nclass PrepareTrainingCorpusStackoverflowDataOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for prepare_training_corpus_stackoverflow_data node\
+      \ outputs.\"\"\"\n    cleaned_posts: str = Field(..., description=\"List of\
+      \ cleaned Stack Overflow posts\")\n    tokenized_content: str = Field(..., description=\"\
+      List of tokenized content from Stack Overflow posts\")\n    formatted_pairs:\
+      \ str = Field(..., description=\"List of formatted paired questions and answers\
+      \ including code snippets\")\n    validation_status: bool = Field(..., description=\"\
+      Whether the cleaning and formatting process is valid\")\n\n\ndef prepare_training_corpus_stackoverflow_data(collect_stackoverflow_and_forum_data_input:\
+      \ CollectStackoverflowAndForumDataOutput, **kwargs) -> PrepareTrainingCorpusStackoverflowDataOutput:\n\
+      \    \"\"\"Clean, tokenize, and convert Stack Overflow and forum data into training\
+      \ samples.\n\n    Args:\n        collect_stackoverflow_and_forum_data_input:\
+      \ Input from the 'collect_stackoverflow_and_forum_data' node.\n        **kwargs:\
+      \ Additional keyword arguments.\n\n    Returns:\n        PrepareTrainingCorpusStackoverflowDataOutput:\
+      \ Object containing outputs for this node.\n    \"\"\"\n    # TODO: Implement\
+      \ this function\n\n    # Return stub output with placeholder values\n    return\
+      \ PrepareTrainingCorpusStackoverflowDataOutput(\n        cleaned_posts=\"\"\
+      ,\n        tokenized_content=\"\",\n        formatted_pairs=\"\",\n        validation_status=False,\n\
+      \    )"
     name: prepare_training_corpus_stackoverflow_data
     nodes_depended_on:
     - collect_stackoverflow_and_forum_data
@@ -258,10 +510,39 @@ nodes:
     prompt: Clean collected Stack Overflow posts by removing noise, tokenize content
       with the designated tokenizer, and format paired questions and answers including
       code snippets as training examples.
+    shims: []
   prepare_workshop_presentation_materials:
     agent: false
+    code_node_type: stub
     description: Create slides, demos, and documentation explaining GPT-6 design,
       training, and benchmark results for the workshop.
+    implementation: "from pydantic import BaseModel, Field\n\n\nclass EvaluateModelPerformanceOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for evaluate_model_performance node outputs.\"\"\"\
+      \n    code_generation_accuracy: int = Field(..., description=\"The accuracy\
+      \ of code generation by the GPT-6 model.\")\n    syntax_correctness: int = Field(...,\
+      \ description=\"The percentage of correct syntax in the generated code by the\
+      \ GPT-6 model.\")\n    code_completion: int = Field(..., description=\"The accuracy\
+      \ of code completion by the GPT-6 model.\")\n    programming_language_understanding:\
+      \ int = Field(..., description=\"The understanding of programming languages\
+      \ by the GPT-6 model.\")\n\n\nclass PrepareWorkshopPresentationMaterialsOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for prepare_workshop_presentation_materials node outputs.\"\
+      \"\"\n    workshop_slide_title: str = Field(..., description=\"The title of\
+      \ the slide covering GPT-6 architecture.\")\n    dataset_used: str = Field(...,\
+      \ description=\"The name of the dataset used for training the GPT-6 model.\"\
+      )\n    benchmark_results: str = Field(..., description=\"A summary of the benchmark\
+      \ results, including code generation accuracy and syntax correctness.\")\n \
+      \   presentation_materials: str = Field(..., description=\"The final presentation\
+      \ materials, including slides and live demo scripts.\")\n\n\ndef prepare_workshop_presentation_materials(evaluate_model_performance_input:\
+      \ EvaluateModelPerformanceOutput, **kwargs) -> PrepareWorkshopPresentationMaterialsOutput:\n\
+      \    \"\"\"Create slides, demos, and documentation explaining GPT-6 design,\
+      \ training, and benchmark results for the workshop.\n\n    Args:\n        evaluate_model_performance_input:\
+      \ Input from the 'evaluate_model_performance' node.\n        **kwargs: Additional\
+      \ keyword arguments.\n\n    Returns:\n        PrepareWorkshopPresentationMaterialsOutput:\
+      \ Object containing outputs for this node.\n    \"\"\"\n    # TODO: Implement\
+      \ this function\n\n    # Return stub output with placeholder values\n    return\
+      \ PrepareWorkshopPresentationMaterialsOutput(\n        workshop_slide_title=\"\
+      \",\n        dataset_used=\"\",\n        benchmark_results=\"\",\n        presentation_materials=\"\
+      \",\n    )"
     name: prepare_workshop_presentation_materials
     nodes_depended_on:
     - evaluate_model_performance
@@ -320,10 +601,41 @@ nodes:
       for the NeurIPS Deep Learning for Code workshop, covering GPT-6 architecture,
       training pipeline, datasets used, benchmark results, and implications for code
       AI.
+    shims: []
   select_hardware_infrastructure:
     agent: false
+    code_node_type: stub
     description: Decide on computing resources for model training including GPUs/TPUs
       and storage.
+    implementation: "from pydantic import BaseModel, Field\n\n\nclass DefineModelSpecificationsOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for define_model_specifications node outputs.\"\"\"\
+      \n    model_name: str = Field(..., description=\"Name of the GPT-6 model\")\n\
+      \    model_size: int = Field(..., description=\"Number of parameters in the\
+      \ GPT-6 model\")\n    model_modality: str = Field(..., description=\"Type of\
+      \ input data for the GPT-6 model (e.g., text, code)\")\n    model_architecture:\
+      \ str = Field(..., description=\"Architecture of the GPT-6 model\")\n    expected_capabilities:\
+      \ str = Field(..., description=\"Expected capabilities of the GPT-6 model for\
+      \ deep learning with code\")\n\n\nclass SelectHardwareInfrastructureOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for select_hardware_infrastructure node outputs.\"\
+      \"\"\n    hardware_infrastructure_type: str = Field(..., description=\"Type\
+      \ of hardware infrastructure selected (e.g., GPU, TPU, CPU)\")\n    number_of_nodes:\
+      \ int = Field(..., description=\"Number of nodes in the hardware infrastructure\"\
+      )\n    memory_required: str = Field(..., description=\"Memory requirements of\
+      \ the hardware infrastructure (e.g., in GB)\")\n    storage_required: str =\
+      \ Field(..., description=\"Storage requirements of the hardware infrastructure\
+      \ (e.g., in GB)\")\n    reasoning_description: str = Field(..., description=\"\
+      Description of the reasoning behind the selected hardware infrastructure\")\n\
+      \n\ndef select_hardware_infrastructure(define_model_specifications_input: DefineModelSpecificationsOutput,\
+      \ **kwargs) -> SelectHardwareInfrastructureOutput:\n    \"\"\"Decide on computing\
+      \ resources for model training including GPUs/TPUs and storage.\n\n    Args:\n\
+      \        define_model_specifications_input: Input from the 'define_model_specifications'\
+      \ node.\n        **kwargs: Additional keyword arguments.\n\n    Returns:\n \
+      \       SelectHardwareInfrastructureOutput: Object containing outputs for this\
+      \ node.\n    \"\"\"\n    # TODO: Implement this function\n\n    # Return stub\
+      \ output with placeholder values\n    return SelectHardwareInfrastructureOutput(\n\
+      \        hardware_infrastructure_type=\"\",\n        number_of_nodes=0,\n  \
+      \      memory_required=\"\",\n        storage_required=\"\",\n        reasoning_description=\"\
+      \",\n    )"
     name: select_hardware_infrastructure
     nodes_depended_on:
     - define_model_specifications
@@ -349,10 +661,48 @@ nodes:
     prompt: Based on model specifications, select appropriate hardware infrastructure
       including GPU/TPU types, number of nodes, memory, and storage required. Describe
       the reasoning concisely.
+    shims: []
   select_training_framework:
     agent: false
+    code_node_type: stub
     description: Choose machine learning frameworks and distributed training tools
       for GPT-6 training.
+    implementation: "from pydantic import BaseModel, Field\n\n\nclass AssembleFullTrainingCorpusOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for assemble_full_training_corpus node outputs.\"\"\
+      \"\n    unified_training_corpus: str = Field(..., description=\"The unified\
+      \ training corpus as a list of strings\")\n    duplicated_content_counts: int\
+      \ = Field(..., description=\"List of counts for duplicated content\")\n    consistent_tokenization_status:\
+      \ bool = Field(..., description=\"Whether consistent tokenization was applied\
+      \ successfully\")\n    training_batches: str = Field(..., description=\"List\
+      \ of training batches as lists of strings\")\n\n\nclass SelectHardwareInfrastructureOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for select_hardware_infrastructure node outputs.\"\
+      \"\"\n    hardware_infrastructure_type: str = Field(..., description=\"Type\
+      \ of hardware infrastructure selected (e.g., GPU, TPU, CPU)\")\n    number_of_nodes:\
+      \ int = Field(..., description=\"Number of nodes in the hardware infrastructure\"\
+      )\n    memory_required: str = Field(..., description=\"Memory requirements of\
+      \ the hardware infrastructure (e.g., in GB)\")\n    storage_required: str =\
+      \ Field(..., description=\"Storage requirements of the hardware infrastructure\
+      \ (e.g., in GB)\")\n    reasoning_description: str = Field(..., description=\"\
+      Description of the reasoning behind the selected hardware infrastructure\")\n\
+      \n\nclass SelectTrainingFrameworkOutput(BaseModel):\n    \"\"\"Pydantic model\
+      \ for select_training_framework node outputs.\"\"\"\n    selected_framework:\
+      \ str = Field(..., description=\"Selected machine learning framework\")\n  \
+      \  selected_toolkit: str = Field(..., description=\"Selected distributed training\
+      \ toolkit\")\n    hardware_resources: str = Field(..., description=\"List of\
+      \ selected hardware resources\")\n    training_plan: str = Field(..., description=\"\
+      Detailed training plan with epoch count, batch size, and learning rate\")\n\n\
+      \ndef select_training_framework(assemble_full_training_corpus_input: AssembleFullTrainingCorpusOutput,\
+      \ select_hardware_infrastructure_input: SelectHardwareInfrastructureOutput,\
+      \ **kwargs) -> SelectTrainingFrameworkOutput:\n    \"\"\"Choose machine learning\
+      \ frameworks and distributed training tools for GPT-6 training.\n\n    Args:\n\
+      \        assemble_full_training_corpus_input: Input from the 'assemble_full_training_corpus'\
+      \ node.\n        select_hardware_infrastructure_input: Input from the 'select_hardware_infrastructure'\
+      \ node.\n        **kwargs: Additional keyword arguments.\n\n    Returns:\n \
+      \       SelectTrainingFrameworkOutput: Object containing outputs for this node.\n\
+      \    \"\"\"\n    # TODO: Implement this function\n\n    # Return stub output\
+      \ with placeholder values\n    return SelectTrainingFrameworkOutput(\n     \
+      \   selected_framework=\"\",\n        selected_toolkit=\"\",\n        hardware_resources=\"\
+      \",\n        training_plan=\"\",\n    )"
     name: select_training_framework
     nodes_depended_on:
     - assemble_full_training_corpus
@@ -376,10 +726,35 @@ nodes:
       bullets: []
     prompt: Select ML frameworks and distributed training solutions for efficient
       training of a large GPT-6 model specialized on code data.
+    shims: []
   train_gpt6_model:
     agent: false
+    code_node_type: stub
     description: Run the model training process using defined specifications and prepared
       corpus.
+    implementation: "from pydantic import BaseModel, Field\nfrom typing import List\n\
+      \n\nclass ConfigureTrainingEnvironmentOutput(BaseModel):\n    \"\"\"Pydantic\
+      \ model for configure_training_environment node outputs.\"\"\"\n    environment_settings:\
+      \ List[str] = Field(..., description=\"List of environment settings, including\
+      \ installed libraries and dependencies.\")\n    containerized_environment: bool\
+      \ = Field(..., description=\"Whether the environment is containerized.\")\n\
+      \    training_environment_status: str = Field(..., description=\"Status of the\
+      \ training environment, including any errors or warnings.\")\n\n\nclass TrainGpt6ModelOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for train_gpt6_model node outputs.\"\"\"\n    training_metrics:\
+      \ str = Field(..., description=\"Training metrics, such as loss and accuracy,\
+      \ during the model training process.\")\n    checkpoint_status: bool = Field(...,\
+      \ description=\"Whether the model training process has reached a reasonable\
+      \ accuracy and is ready to be used.\")\n    training_time: int = Field(...,\
+      \ description=\"Total time taken to train the GPT-6 model.\")\n\n\ndef train_gpt6_model(configure_training_environment_input:\
+      \ ConfigureTrainingEnvironmentOutput, **kwargs) -> TrainGpt6ModelOutput:\n \
+      \   \"\"\"Run the model training process using defined specifications and prepared\
+      \ corpus.\n\n    Args:\n        configure_training_environment_input: Input\
+      \ from the 'configure_training_environment' node.\n        **kwargs: Additional\
+      \ keyword arguments.\n\n    Returns:\n        TrainGpt6ModelOutput: Object containing\
+      \ outputs for this node.\n    \"\"\"\n    # TODO: Implement this function\n\n\
+      \    # Return stub output with placeholder values\n    return TrainGpt6ModelOutput(\n\
+      \        training_metrics=\"\",\n        checkpoint_status=False,\n        training_time=0,\n\
+      \    )"
     name: train_gpt6_model
     nodes_depended_on:
     - configure_training_environment
@@ -401,3 +776,4 @@ nodes:
     prompt: Execute the training loop for the GPT-6 model on the assembled training
       data using the configured environment. Focus on progressive training, checkpointing,
       and monitoring metrics for code understanding and generation.
+    shims: []

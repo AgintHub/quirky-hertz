@@ -1,3 +1,18 @@
+from ._evaluate_model_performance.load_model_checkpoint import load_model_checkpoint
+from ._evaluate_model_performance.load_code_generation_benchmark import load_code_generation_benchmark
+from ._evaluate_model_performance.load_syntax_correctness_benchmark import load_syntax_correctness_benchmark
+from ._evaluate_model_performance.load_code_completion_benchmark import load_code_completion_benchmark
+from ._evaluate_model_performance.load_programming_language_understanding_benchmark import load_programming_language_understanding_benchmark
+from ._evaluate_model_performance.run_code_generation_evaluation import run_code_generation_evaluation
+from ._evaluate_model_performance.calculate_accuracy_percentage import calculate_accuracy_percentage
+from ._evaluate_model_performance.run_syntax_correctness_evaluation import run_syntax_correctness_evaluation
+from ._evaluate_model_performance.calculate_syntax_correctness_percentage import calculate_syntax_correctness_percentage
+from ._evaluate_model_performance.run_code_completion_evaluation import run_code_completion_evaluation
+from ._evaluate_model_performance.calculate_completion_accuracy_percentage import calculate_completion_accuracy_percentage
+from ._evaluate_model_performance.run_language_understanding_evaluation import run_language_understanding_evaluation
+from ._evaluate_model_performance.calculate_understanding_percentage import calculate_understanding_percentage
+from ._evaluate_model_performance.log_evaluation_metrics import log_evaluation_metrics
+
 from pydantic import BaseModel, Field
 
 
@@ -26,12 +41,43 @@ def evaluate_model_performance(train_gpt6_model_input: TrainGpt6ModelOutput, **k
     Returns:
         EvaluateModelPerformanceOutput: Object containing outputs for this node.
     """
-    # TODO: Implement this function
-
-    # Return stub output with placeholder values
+    # Load the trained model for evaluation
+    model_checkpoint = load_model_checkpoint(checkpoint_status=train_gpt6_model_input.checkpoint_status)
+    
+    # Prepare evaluation datasets for different benchmarks
+    code_gen_dataset = load_code_generation_benchmark()
+    syntax_dataset = load_syntax_correctness_benchmark()
+    completion_dataset = load_code_completion_benchmark()
+    language_understanding_dataset = load_programming_language_understanding_benchmark()
+    
+    # Evaluate code generation accuracy
+    code_gen_results = run_code_generation_evaluation(model=model_checkpoint, dataset=code_gen_dataset)
+    code_generation_accuracy: int = calculate_accuracy_percentage(results=code_gen_results)
+    
+    # Evaluate syntax correctness
+    syntax_results = run_syntax_correctness_evaluation(model=model_checkpoint, dataset=syntax_dataset)
+    syntax_correctness: int = calculate_syntax_correctness_percentage(results=syntax_results)
+    
+    # Evaluate code completion accuracy
+    completion_results = run_code_completion_evaluation(model=model_checkpoint, dataset=completion_dataset)
+    code_completion: int = calculate_completion_accuracy_percentage(results=completion_results)
+    
+    # Evaluate programming language understanding
+    understanding_results = run_language_understanding_evaluation(model=model_checkpoint, dataset=language_understanding_dataset)
+    programming_language_understanding: int = calculate_understanding_percentage(results=understanding_results)
+    
+    # Log evaluation metrics for analysis
+    log_evaluation_metrics(
+        training_metrics=train_gpt6_model_input.training_metrics,
+        code_gen_acc=code_generation_accuracy,
+        syntax_acc=syntax_correctness,
+        completion_acc=code_completion,
+        understanding_acc=programming_language_understanding
+    )
+    
     return EvaluateModelPerformanceOutput(
-        code_generation_accuracy=0,
-        syntax_correctness=0,
-        code_completion=0,
-        programming_language_understanding=0,
+        code_generation_accuracy=code_generation_accuracy,
+        syntax_correctness=syntax_correctness,
+        code_completion=code_completion,
+        programming_language_understanding=programming_language_understanding,
     )

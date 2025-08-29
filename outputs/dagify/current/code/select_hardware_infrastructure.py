@@ -1,3 +1,10 @@
+from ._select_hardware_infrastructure.analyze_model_hardware_requirements import analyze_model_hardware_requirements
+from ._select_hardware_infrastructure.select_optimal_hardware_type import select_optimal_hardware_type
+from ._select_hardware_infrastructure.calculate_optimal_node_count import calculate_optimal_node_count
+from ._select_hardware_infrastructure.calculate_memory_requirements import calculate_memory_requirements
+from ._select_hardware_infrastructure.calculate_storage_requirements import calculate_storage_requirements
+from ._select_hardware_infrastructure.generate_hardware_selection_reasoning import generate_hardware_selection_reasoning
+
 from pydantic import BaseModel, Field
 
 
@@ -29,13 +36,52 @@ def select_hardware_infrastructure(define_model_specifications_input: DefineMode
     Returns:
         SelectHardwareInfrastructureOutput: Object containing outputs for this node.
     """
-    # TODO: Implement this function
-
-    # Return stub output with placeholder values
+    # Analyze model requirements to determine optimal hardware
+    hardware_requirements: dict = analyze_model_hardware_requirements(
+        model_size=define_model_specifications_input.model_size,
+        model_architecture=define_model_specifications_input.model_architecture,
+        model_modality=define_model_specifications_input.model_modality
+    )
+    
+    # Select appropriate hardware type based on model specifications
+    selected_hardware_type: str = select_optimal_hardware_type(
+        requirements=hardware_requirements,
+        expected_capabilities=define_model_specifications_input.expected_capabilities
+    )
+    
+    # Calculate required number of nodes for distributed training
+    optimal_node_count: int = calculate_optimal_node_count(
+        model_size=define_model_specifications_input.model_size,
+        hardware_type=selected_hardware_type
+    )
+    
+    # Determine memory requirements for training
+    memory_specs: str = calculate_memory_requirements(
+        model_size=define_model_specifications_input.model_size,
+        node_count=optimal_node_count,
+        hardware_type=selected_hardware_type
+    )
+    
+    # Determine storage requirements for model and data
+    storage_specs: str = calculate_storage_requirements(
+        model_size=define_model_specifications_input.model_size,
+        model_modality=define_model_specifications_input.model_modality,
+        training_data_estimate=hardware_requirements
+    )
+    
+    # Generate reasoning for hardware selection decisions
+    reasoning: str = generate_hardware_selection_reasoning(
+        model_specs=define_model_specifications_input,
+        hardware_type=selected_hardware_type,
+        node_count=optimal_node_count,
+        memory_req=memory_specs,
+        storage_req=storage_specs
+    )
+    
     return SelectHardwareInfrastructureOutput(
-        hardware_infrastructure_type="",
-        number_of_nodes=0,
-        memory_required="",
-        storage_required="",
-        reasoning_description="",
+        hardware_infrastructure_type=selected_hardware_type,
+        number_of_nodes=optimal_node_count,
+        memory_required=memory_specs,
+        storage_required=storage_specs,
+        reasoning_description=reasoning
     )

@@ -1,3 +1,16 @@
+from ._select_training_framework.estimate_corpus_size import estimate_corpus_size
+from ._select_training_framework.count_training_batches import count_training_batches
+from ._select_training_framework.analyze_tokenization_needs import analyze_tokenization_needs
+from ._select_training_framework.identify_framework_candidates import identify_framework_candidates
+from ._select_training_framework.evaluate_frameworks import evaluate_frameworks
+from ._select_training_framework.get_compatible_toolkits import get_compatible_toolkits
+from ._select_training_framework.select_optimal_toolkit import select_optimal_toolkit
+from ._select_training_framework.compile_hardware_resources import compile_hardware_resources
+from ._select_training_framework.calculate_optimal_batch_size import calculate_optimal_batch_size
+from ._select_training_framework.determine_learning_rate import determine_learning_rate
+from ._select_training_framework.estimate_epoch_count import estimate_epoch_count
+from ._select_training_framework.generate_training_plan import generate_training_plan
+
 from pydantic import BaseModel, Field
 
 
@@ -37,12 +50,36 @@ def select_training_framework(assemble_full_training_corpus_input: AssembleFullT
     Returns:
         SelectTrainingFrameworkOutput: Object containing outputs for this node.
     """
-    # TODO: Implement this function
-
-    # Return stub output with placeholder values
+    # Analyze corpus characteristics to determine framework requirements
+    corpus_size: int = estimate_corpus_size(corpus=assemble_full_training_corpus_input.unified_training_corpus)
+    batch_count: int = count_training_batches(batches=assemble_full_training_corpus_input.training_batches)
+    tokenization_requirements: str = analyze_tokenization_needs(status=assemble_full_training_corpus_input.consistent_tokenization_status)
+    
+    # Evaluate hardware capabilities and constraints
+    hardware_type: str = select_hardware_infrastructure_input.hardware_infrastructure_type
+    node_count: int = select_hardware_infrastructure_input.number_of_nodes
+    memory_specs: str = select_hardware_infrastructure_input.memory_required
+    
+    # Select optimal framework based on hardware and corpus characteristics
+    framework_candidates: list = identify_framework_candidates(hardware_type=hardware_type, model_type="GPT-6")
+    selected_framework: str = evaluate_frameworks(candidates=framework_candidates, corpus_size=corpus_size, hardware_specs=hardware_type)
+    
+    # Choose distributed training toolkit compatible with selected framework
+    toolkit_options: list = get_compatible_toolkits(framework=selected_framework, node_count=node_count)
+    selected_toolkit: str = select_optimal_toolkit(options=toolkit_options, hardware_type=hardware_type)
+    
+    # Compile hardware resources configuration
+    hardware_resources: str = compile_hardware_resources(infrastructure_type=hardware_type, nodes=node_count, memory=memory_specs)
+    
+    # Generate detailed training plan
+    optimal_batch_size: int = calculate_optimal_batch_size(corpus_size=corpus_size, hardware_memory=memory_specs)
+    learning_rate: float = determine_learning_rate(framework=selected_framework, batch_size=optimal_batch_size)
+    epoch_count: int = estimate_epoch_count(corpus_size=corpus_size, batch_count=batch_count)
+    training_plan: str = generate_training_plan(epochs=epoch_count, batch_size=optimal_batch_size, learning_rate=learning_rate)
+    
     return SelectTrainingFrameworkOutput(
-        selected_framework="",
-        selected_toolkit="",
-        hardware_resources="",
-        training_plan="",
+        selected_framework=selected_framework,
+        selected_toolkit=selected_toolkit,
+        hardware_resources=hardware_resources,
+        training_plan=training_plan
     )

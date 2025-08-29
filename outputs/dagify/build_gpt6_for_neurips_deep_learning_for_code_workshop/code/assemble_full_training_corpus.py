@@ -1,3 +1,10 @@
+from ._assemble_full_training_corpus.combine_training_sources import combine_training_sources
+from ._assemble_full_training_corpus.deduplicate_content import deduplicate_content
+from ._assemble_full_training_corpus.count_duplicates import count_duplicates
+from ._assemble_full_training_corpus.normalize_tokenization import normalize_tokenization
+from ._assemble_full_training_corpus.validate_consistent_tokenization import validate_consistent_tokenization
+from ._assemble_full_training_corpus.create_training_batches import create_training_batches
+
 from pydantic import BaseModel, Field
 
 
@@ -44,12 +51,34 @@ def assemble_full_training_corpus(prepare_training_corpus_code_repos_input: Prep
     Returns:
         AssembleFullTrainingCorpusOutput: Object containing outputs for this node.
     """
-    # TODO: Implement this function
-
-    # Return stub output with placeholder values
+    # Combine all training data sources
+    combined_data: str = combine_training_sources(
+        code_repos=prepare_training_corpus_code_repos_input.training_samples,
+        books=prepare_training_corpus_programming_books_input.structured_book_samples,
+        stackoverflow=prepare_training_corpus_stackoverflow_data_input.formatted_pairs
+    )
+    
+    # Remove duplicates and count them
+    deduplicated_corpus: str = deduplicate_content(data=combined_data)
+    duplicate_counts: int = count_duplicates(original=combined_data, deduplicated=deduplicated_corpus)
+    
+    # Ensure consistent tokenization across all sources
+    unified_corpus: str = normalize_tokenization(
+        corpus=deduplicated_corpus,
+        code_tokenization=prepare_training_corpus_code_repos_input.tokenized_code,
+        book_tokenization=prepare_training_corpus_programming_books_input.tokenized_book_data,
+        stackoverflow_tokenization=prepare_training_corpus_stackoverflow_data_input.tokenized_content
+    )
+    
+    # Validate tokenization consistency
+    tokenization_valid: bool = validate_consistent_tokenization(corpus=unified_corpus)
+    
+    # Create training batches
+    batched_data: str = create_training_batches(corpus=unified_corpus)
+    
     return AssembleFullTrainingCorpusOutput(
-        unified_training_corpus="",
-        duplicated_content_counts=0,
-        consistent_tokenization_status=False,
-        training_batches="",
+        unified_training_corpus=unified_corpus,
+        duplicated_content_counts=duplicate_counts,
+        consistent_tokenization_status=tokenization_valid,
+        training_batches=batched_data
     )
